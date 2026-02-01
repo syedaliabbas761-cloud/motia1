@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Park Invite</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffcad4, #ffe6eb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+
+  #card {
+    text-align: center;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.4;
+  }
+
+  /* BUTTON AREA */
+  .button-box {
+    position: relative;
+    width: 260px;
+    height: 140px;
+    margin: 30px auto 0;
+  }
+
+  button {
+    padding: 14px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  #yesBtn {
+    background: #ff4d6d;
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  #noBtn {
+    background: #cccccc;
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
+  #result {
+    display: none;
+  }
+
+  .dance {
+    font-size: 80px;
+    animation: dance 0.8s infinite alternate ease-in-out;
+  }
+
+  @keyframes dance {
+    from { transform: rotate(-12deg) scale(1); }
+    to { transform: rotate(12deg) scale(1.15); }
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: bold;
+    color: #b0003a;
+    margin-top: 14px;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 22px;
+    animation: floatUp 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="card">
+
+  <div id="question">
+    <h1>
+      🕺💅<br>
+      Kaynat,<br>
+      I’ll be in the park…<br>
+      would you care to join me? 💖<br>
+      🕺💅
+    </h1>
+
+    <div class="button-box" id="box">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+  <div id="result">
+    <div class="dance">🕺💃🕺</div>
+    <h1>YAAAAAY!!! 💖🎉</h1>
+    <p>Chocolates on me 🍫😉</p>
+  </div>
+
+</div>
+
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const box = document.getElementById("box");
+  const question = document.getElementById("question");
+  const result = document.getElementById("result");
+
+  function moveNo() {
+    const boxRect = box.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = boxRect.width - btnRect.width;
+    const maxY = boxRect.height - btnRect.height;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+    noBtn.style.transform = "none";
+  }
+
+  // Mobile + desktop safe
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchend", moveNo);
+
+  yesBtn.addEventListener("click", () => {
+    question.style.display = "none";
+    result.style.display = "block";
+    startHearts();
+  });
+
+  function startHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
